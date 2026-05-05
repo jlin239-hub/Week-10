@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jeffrey Lin - Week 10</title>
+
+  <style>
+    :root{
+      --bg: #0b1020;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.08);
+      --line: rgba(255,255,255,.12);
+      --text: #eef2ff;
+      --muted: rgba(238,242,255,.72);
+      --accent: #7aa2ff;
+      --accent2:#34d399;
+      --warn:#fbbf24;
+      --shadow: 0 18px 45px rgba(0,0,0,.45);
+      --radius: 18px;
+      --max: 1180px;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background: radial-gradient(900px 600px at 10% 0%, rgba(122,162,255,.25), transparent 60%),
+                  radial-gradient(800px 520px at 90% 20%, rgba(52,211,153,.18), transparent 60%),
+                  linear-gradient(180deg, #060814, var(--bg) 40%, #070a14);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    /* Top hero */
+    .hero{
+      padding: 34px 14px 18px;
+    }
+    .hero-inner{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 22px 20px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: linear-gradient(135deg, rgba(122,162,255,.18), rgba(255,255,255,.04));
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow:hidden;
+    }
+    .hero-inner:before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(420px 220px at 18% 10%, rgba(251,191,36,.20), transparent 60%),
+        radial-gradient(520px 260px at 80% 0%, rgba(52,211,153,.14), transparent 60%);
+      pointer-events:none;
+      filter: blur(0px);
+    }
+    .hero-content{
+      position: relative;
+      display:flex;
+      gap: 14px;
+      align-items:flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    h1{
+      margin:0;
+      font-size: 28px;
+      line-height:1.2;
+      letter-spacing: .2px;
+    }
+    .subtitle{
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 70ch;
+    }
+
+    /* chips */
+    .chips{
+      display:flex;
+      gap:10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .chip{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      white-space: nowrap;
+      backdrop-filter: blur(6px);
+    }
+    .chip b{ color: rgba(238,242,255,.9); }
+
+    /* Layout */
+    .wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 12px 14px 44px;
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 980px){
+      .wrap{ grid-template-columns: 1fr; }
+      .side{ position: relative; top: auto; }
+    }
+
+    .side{
+      position: sticky;
+      top: 12px;
+      align-self: start;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      box-shadow: var(--shadow);
+      padding: 14px;
+      backdrop-filter: blur(10px);
+    }
+
+    .side h2{
+      margin:0 0 10px;
+      font-size: 14px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(238,242,255,.75);
+    }
+
+    .side .item{
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      background: rgba(255,255,255,.04);
+      margin-bottom: 10px;
+    }
+    .side .label{
+      color: rgba(238,242,255,.7);
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+    .side .value{
+      font-weight: 650;
+      font-size: 14px;
+    }
+
+    .jump{
+      margin-top: 8px;
+      display:flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .jump a{
+      text-decoration:none;
+      color: var(--text);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+    .jump a:hover{
+      border-color: rgba(122,162,255,.5);
+      background: rgba(122,162,255,.10);
+    }
+
+    /* Main cards */
+    .card{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px 16px 8px;
+      backdrop-filter: blur(10px);
+      margin-bottom: 14px;
+    }
+
+    .card h2{
+      margin: 0 0 10px;
+      font-size: 18px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+
+    p{ margin: 0 0 12px; color: rgba(238,242,255,.92); }
+
+    /* Figure */
+    figure{
+      margin: 12px 0 16px;
+      padding: 14px;
+      background: rgba(0,0,0,.22);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+    }
+    figcaption{
+      margin-top: 10px;
+      color: rgba(238,242,255,.70);
+      font-size: 13px;
+    }
+
+    /* Question */
+    .question-box{
+      border: 1px solid rgba(122,162,255,.55);
+      background: rgba(122,162,255,.10);
+      border-radius: 16px;
+      padding: 14px;
+      font-weight: 700;
+    }
+
+    .wordcount{
+      margin-top: 10px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(255,255,255,.18);
+      color: rgba(238,242,255,.75);
+      font-size: 14px;
+    }
+
+    /* Sources */
+    .sources{
+      padding: 12px 14px;
+      background: rgba(0,0,0,.20);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+    }
+    .sources ul{ margin: 8px 0 0 18px; }
+    .sources li{ margin-bottom: 8px; color: rgba(238,242,255,.88); }
+
+    /* Inline SVG responsive */
+    .svg-wrap{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding: 6px 0 2px;
+    }
+    .svg-wrap svg{
+      width: min(900px, 100%);
+      height:auto;
+      display:block;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div>
+          <h1>Week 10: Pollution &amp; Environment — Hazards and Human Health</h1>
+          <p class="subtitle">
+            Weekly reflection responding to a discussion question, with solutions, tradeoffs, gaps, and a final question.
+          </p>
+          <div class="chips">
+            <span class="chip"><b>Date:</b> March 18, 2026</span>
+            <span class="chip"><b>Reading:</b> Miller, Chapter 17</span>
+            <span class="chip"><b>Theme:</b> Hazard, Exposure, Risk</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BODY -->
+  <div class="wrap">
+    <!-- SIDE PANEL -->
+    <aside class="side">
+      <h2>Week 10 Overview</h2>
+
+      <div class="item">
+        <div class="label">Key idea</div>
+        <div class="value">Risk = hazard × exposure</div>
+      </div>
+
+      <div class="item">
+        <div class="label">Big tension</div>
+        <div class="value">Uncertainty vs. prevention</div>
+      </div>
+
+      <div class="item">
+        <div class="label">Your question</div>
+        <div class="value">When should policymakers act?</div>
+      </div>
+
+      <h2 style="margin-top:14px;">Jump</h2>
+      <div class="jump">
+        <a href="#reflection">Reflection</a>
+        <a href="#matters">Why it matters</a>
+        <a href="#thoughts">Solutions & gaps</a>
+        <a href="#question">Question</a>
+        <a href="#sources">Sources</a>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main>
+      <section id="reflection" class="card">
+        <h2>Reflection on Miller Chapter 17</h2>
+
+        <p>
+          Chapter 17 basically made me see environmental issues as real, everyday risk problems, not just “nature” problems. The chapter breaks down what a hazard is
+          and how risk is really about two things: how harmful something is and how likely you are to be exposed to it. That helped me because it explains why some
+          dangers are everywhere but feel invisible, like air pollution, and other dangers get huge attention even if they are less likely.
+        </p>
+
+        <p>
+          I also liked how it separates risk assessment from risk management. First, you try to figure out what the risk actually is, then you decide what to do about it.
+          And that decision is not only about science. It is also money, politics, and who gets protected first. It made me think a lot about chemicals, too, because we use so
+          many products where the long-term health effects are not fully clear, and that is where prevention matters.
+        </p>
+
+        <figure>
+          <div class="svg-wrap" aria-label="Hazard and exposure illustration">
+            <!-- Inline “picture” so it NEVER breaks -->
+            <svg viewBox="0 0 1200 520" role="img" aria-label="Hazard and exposure risk illustration">
+              <defs>
+                <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#0f172a"/>
+                  <stop offset="100%" stop-color="#111827"/>
+                </linearGradient>
+                <linearGradient id="sm" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#cbd5e1" stop-opacity=".55"/>
+                  <stop offset="100%" stop-color="#94a3b8" stop-opacity=".05"/>
+                </linearGradient>
+              </defs>
+
+              <rect width="1200" height="520" rx="24" fill="url(#bg1)" />
+              <rect x="26" y="26" width="1148" height="468" rx="20" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.10)" />
+
+              <!-- city blocks -->
+              <g opacity=".85">
+                <rect x="80" y="250" width="120" height="190" fill="#1f2937"/>
+                <rect x="215" y="210" width="95" height="230" fill="#111827"/>
+                <rect x="325" y="235" width="110" height="205" fill="#1f2937"/>
+                <rect x="455" y="270" width="150" height="170" fill="#111827"/>
+              </g>
+
+              <!-- factory -->
+              <rect x="720" y="275" width="350" height="165" fill="#111827"/>
+              <rect x="760" y="220" width="60" height="220" fill="#1f2937"/>
+              <rect x="860" y="185" width="70" height="255" fill="#1f2937"/>
+              <rect x="980" y="245" width="55" height="195" fill="#1f2937"/>
+
+              <!-- smoke -->
+              <ellipse cx="820" cy="210" rx="80" ry="34" fill="url(#sm)"/>
+              <ellipse cx="900" cy="168" rx="110" ry="44" fill="url(#sm)"/>
+              <ellipse cx="990" cy="130" rx="140" ry="52" fill="url(#sm)"/>
+
+              <!-- road -->
+              <rect x="0" y="430" width="1200" height="60" fill="rgba(0,0,0,.25)"/>
+              <line x1="0" y1="460" x2="1200" y2="460" stroke="#fbbf24" stroke-width="8" stroke-dasharray="40 26" opacity=".9"/>
+
+              <!-- warning triangle -->
+              <g transform="translate(120 210)">
+                <polygon points="120,0 250,240 -10,240" fill="#fbbf24" stroke="#0b1020" stroke-width="12"/>
+                <rect x="106" y="70" width="28" height="90" rx="12" fill="#0b1020"/>
+                <circle cx="120" cy="190" r="14" fill="#0b1020"/>
+              </g>
+
+              <!-- exposure “rings” near person -->
+              <circle cx="560" cy="355" r="78" fill="none" stroke="rgba(122,162,255,.45)" stroke-width="6"/>
+              <circle cx="560" cy="355" r="115" fill="none" stroke="rgba(52,211,153,.30)" stroke-width="6"/>
+
+              <!-- person -->
+              <circle cx="560" cy="310" r="22" fill="#eef2ff"/>
+              <rect x="540" y="332" width="40" height="92" rx="10" fill="#eef2ff"/>
+              <line x1="540" y1="365" x2="510" y2="410" stroke="#eef2ff" stroke-width="14" stroke-linecap="round"/>
+              <line x1="580" y1="365" x2="610" y2="410" stroke="#eef2ff" stroke-width="14" stroke-linecap="round"/>
+
+              <!-- label -->
+              <rect x="670" y="56" width="460" height="70" rx="16" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.14)"/>
+              <text x="700" y="86" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#eef2ff">
+                Hazard + Exposure = Risk
+              </text>
+              <text x="700" y="112" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="rgba(238,242,255,.78)">
+                Risk management is also about politics and who gets protected first.
+              </text>
+            </svg>
+          </div>
+
+          <figcaption>
+            Figure 1. Risk depends on harm and exposure. Even good science still leaves policy choices about prevention, cost, and protection.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section id="matters" class="card">
+        <h2>Why This Issue Matters to Me</h2>
+        <p>
+          This issue matters to me because risk is not shared equally. Some communities are constantly exposed to pollution from highways, warehouses, factories, or old industrial areas, while other people are much more protected from those same dangers. Thinking about hazard and exposure together makes environmental problems feel more real because it shows that harm is not just about whether something is dangerous in theory. It is also about who is living near it, who is breathing it in, and who has the least power to avoid it.
+        </p>
+      </section>
+
+      <section id="thoughts" class="card">
+        <h2>Thoughts: Solutions, Tradeoffs, and Gaps</h2>
+        <p>
+          One possible solution is using the precautionary principle more seriously. If the potential harm is high, policymakers should not wait for absolute certainty before acting. The advantage of this is that it can protect people before long-term damage becomes harder to reverse. The disadvantage is that critics may say it slows down business, innovation, or product use too much.
+        </p>
+        <p>
+          Another solution is requiring stronger testing and clearer disclosure for chemicals and pollutants before they become widespread. That would improve accountability and make it easier for people to know what they are exposed to. At the same time, better testing can be expensive, politically contested, and slowed down by lobbying. Risk management is difficult because it is not just a scientific process. It is also shaped by power, money, and which groups are treated as most worth protecting.
+        </p>
+        <p>
+          <b>Gap in knowledge:</b> One thing I still want to understand better is how policymakers decide what amount of uncertainty is acceptable before acting. I also think more information is needed about cumulative exposure, since real life usually involves repeated exposure to multiple hazards over time, not just one isolated substance.
+        </p>
+      </section>
+
+      <section id="question" class="card">
+        <h2>Question</h2>
+        <div class="question-box">
+          When the evidence is not perfect yet, but the potential harm is serious, how should policymakers decide when to act?
+        </div>
+        <div class="wordcount"><b>Word Count:</b> 461</div>
+      </section>
+
+      <section id="sources" class="card">
+        <h2>Sources Used</h2>
+        <div class="sources">
+          <ul>
+            <li>Miller, G. Tyler, and Scott E. Spoolman. <i>Living in the Environment</i>. Chapter 17.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
